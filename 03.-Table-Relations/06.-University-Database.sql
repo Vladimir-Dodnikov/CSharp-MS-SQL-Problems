@@ -1,0 +1,38 @@
+CREATE DATABASE [E/R-Diagrams]
+
+USE [E/R-Diagrams]
+
+CREATE TABLE Majors
+(
+	MajorID INT PRIMARY KEY IDENTITY,
+	[Name] NVARCHAR(50) NOT NULL
+)
+
+CREATE TABLE Students
+(
+	StudentID INT PRIMARY KEY IDENTITY,
+	StudentNumber NVARCHAR(10) NOT NULL,
+	StudentName NVARCHAR(50) NOT NULL,
+	MajorID INT FOREIGN KEY REFERENCES Majors(MajorID) --NOT NULL
+)
+
+CREATE TABLE Payments
+(
+	PaymentID INT PRIMARY KEY IDENTITY,
+	PaymentDate DATE NOT NULL,
+	PaymentAmount Decimal(15,2) NOT NULL, --standard for money
+	StudentID INT FOREIGN KEY REFERENCES Students(StudentID) NOT NULL
+)
+
+CREATE TABLE Subjects
+(
+	SubjectID INT PRIMARY KEY,
+	SubjectName NVARCHAR(50) NOT NULL
+)
+
+CREATE TABLE Agenda
+(
+	StudentID INT NOT NULL FOREIGN KEY REFERENCES Students(StudentID),
+	SubjectID INT NOT NULL FOREIGN KEY REFERENCES Subjects(SubjectID)
+	PRIMARY KEY (StudentID, SubjectID)
+)
